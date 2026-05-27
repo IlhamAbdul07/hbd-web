@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Happy Birthday Chika! 🎉</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- MUSIC BUTTON -->
+    <button class="music-fab" id="music-btn" title="Play music" aria-label="Toggle music">🎵</button>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="balloons">
+        <span class="balloon">🎈</span>
+        <span class="balloon" style="animation-delay: 0.5s">🎀</span>
+        <span class="balloon" style="animation-delay: 1s">🎈</span>
+      </div>
+
+      <div class="badge">✨ Special Day Alert ✨</div>
+
+      <h1>Happy Birthday</h1>
+      <span class="name">Chika!</span>
+
+      <!-- PHOTO SLOT -->
+      <div class="photo-wrap">
+        <div class="photo-ring">
+          <div class="photo-inner" id="photo-tap" onclick="document.getElementById('photo-input').click()">
+            <img id="photo-img" alt="Foto Chika" />
+            <div class="photo-placeholder" id="photo-ph">
+              <span>👧</span>
+              <span>TAP TO ADD FOTO</span>
+            </div>
+          </div>
+        </div>
+        <label class="photo-label" for="photo-input">📷 Ganti Foto</label>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" />
+
+      <p class="subtitle">Semoga hari ini penuh kebahagiaan, tawa, dan semua hal indah yang kamu impikan! 🌸</p>
+
+      <div class="scroll-hint">
+        <span>Scroll ke bawah</span>
+        <span>↓</span>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="section">
+      <div class="section-title">⏰ Countdown ke Hari-H</div>
+      <div class="countdown-grid" id="countdown-grid">
+        <div class="count-box">
+          <div class="count-num" id="cd-days">00</div>
+          <div class="count-label">Hari</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num" id="cd-hours">00</div>
+          <div class="count-label">Jam</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num" id="cd-min">00</div>
+          <div class="count-label">Menit</div>
+        </div>
+        <div class="count-box">
+          <div class="count-num" id="cd-sec">00</div>
+          <div class="count-label">Detik</div>
+        </div>
+      </div>
+      <div class="birthday-banner" id="bday-banner">🎂 Selamat Ulang Tahun Chika! 🎂</div>
+      <p style="font-size: 0.75rem; color: #aaa; margin-top: 0.75rem" id="target-date-label"></p>
+
+      <div class="edit-note">✏️ <b>Edit tanggal ulang tahun:</b> Buka file HTML, cari <code>BIRTHDAY_DATE</code> lalu ganti ke tanggal Chika yang sebenarnya.</div>
+    </section>
+
+    <!-- WISH CARD -->
+    <section class="wish-section">
+      <div class="section-title">💌 Ucapan Spesial</div>
+      <div class="wish-card">
+        <span class="wish-emoji">🎂</span>
+        <p class="wish-text">
+          Hei <b>Chika Nurfadillah</b>! 🌸<br /><br />
+          Di hari yang spesial ini, semoga segala impian dan harapanmu terwujud satu per satu. Kamu adalah orang yang luar biasa, dan dunia lebih berwarna karena kamu ada. 🌈<br /><br />
+          Semoga tahun ini dipenuhi kebahagiaan, kesehatan, dan semua hal indah yang kamu layak dapatkan. Panjang umur, bahagia selalu! 🎉✨<br /><br />
+          With love 💕
+        </p>
+      </div>
+    </section>
+
+    <!-- MAGIC BUTTON -->
+    <section class="magic-section">
+      <div class="section-title">🎁 Ada Kejutan!</div>
+      <p class="magic-hint">Tekan tombol di bawah untuk membuka kejutan~</p>
+      <button class="magic-btn" id="magic-btn" onclick="showSurprise()">🎁 Buka Hadiahku!</button>
+      <div class="surprise-box" id="surprise-box">
+        <div class="surprise-card">
+          <span class="surprise-emoji" id="surprise-emoji">🌟</span>
+          <p class="surprise-msg" id="surprise-msg">Loading...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Made with <span class="heart">❤️</span> for</p>
+      <p style="font-family: &quot;Pacifico&quot;, cursive; font-size: 1.2rem; color: var(--purple)">Chika Nurfadillah</p>
+      <p style="margin-top: 0.5rem; color: #aaa; font-size: 0.75rem">🎂 Happy Birthday 🎂</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
