@@ -239,19 +239,45 @@ h1 {
   line-height: 1.7;
 }
 
-/* ===== STEP 2 — PHOTO SIDE ===== */
+/* ===== STEP 2 — PHOTO SIDE (Polaroid) ===== */
 .photo-side {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid white;
-  box-shadow: 0 8px 24px rgba(199, 125, 255, 0.3);
+  width: 180px;
+  background: white;
+  padding: 10px 10px 38px 10px;
+  border-radius: 4px;
+  box-shadow: 0 10px 28px rgba(199, 125, 255, 0.3);
+  position: relative;
+  transform: rotate(2deg);
+}
+
+.photo-side::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 65px;
+  height: 16px;
+  background: rgba(199, 125, 255, 0.7);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.photo-side::after {
+  content: "ready to vibe? 🎶";
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Pacifico", cursive;
+  font-size: 1rem;
+  color: var(--dark);
 }
 
 .photo-side img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
@@ -313,10 +339,11 @@ h1 {
 .cake-stage {
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.25rem;
   margin: 1rem 0;
+  flex-wrap: wrap;
 }
 
 .cake {
@@ -453,18 +480,43 @@ h1 {
 }
 
 .cake-photo {
-  width: 90px;
-  height: 90px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 3px solid white;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  width: 140px;
+  background: white;
+  padding: 9px 9px 34px 9px;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   transform: rotate(-6deg);
+  position: relative;
+}
+
+.cake-photo::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(3deg);
+  width: 55px;
+  height: 15px;
+  background: rgba(255, 209, 102, 0.75);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cake-photo::after {
+  content: "make a wish 🕯️";
+  position: absolute;
+  bottom: 7px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Pacifico", cursive;
+  font-size: 0.9rem;
+  color: var(--dark);
 }
 
 .cake-photo img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
@@ -578,19 +630,32 @@ h1 {
 }
 
 .surprise-photo-wrap {
-  width: 210px;
-  height: 210px;
-  margin: 0 auto 1rem;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 5px solid white;
-  box-shadow: 0 8px 24px rgba(199, 125, 255, 0.4);
+  width: 200px;
   background: white;
+  padding: 10px 10px 14px 10px;
+  border-radius: 4px;
+  margin: 0 auto 1rem;
+  box-shadow: 0 8px 24px rgba(199, 125, 255, 0.4);
+  transform: rotate(-3deg);
+  position: relative;
+}
+
+.surprise-photo-wrap::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 60px;
+  height: 15px;
+  background: rgba(255, 209, 102, 0.75);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .surprise-photo-wrap img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
@@ -629,20 +694,46 @@ h1 {
   box-shadow: 0 2px 8px rgba(199, 125, 255, 0.5);
 }
 
-/* ===== STEP 8 — FINAL ===== */
+/* ===== STEP 8 — FINAL (Polaroid) ===== */
 .footer-avatar-big {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 5px solid white;
-  box-shadow: 0 12px 36px rgba(255, 107, 157, 0.4);
+  width: 220px;
+  background: white;
+  padding: 14px 14px 52px 14px;
+  border-radius: 6px;
+  box-shadow: 0 14px 40px rgba(255, 107, 157, 0.35);
+  position: relative;
+  transform: rotate(-3deg);
   animation: poly-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-avatar-big::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 70px;
+  height: 18px;
+  background: rgba(255, 209, 102, 0.75);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer-avatar-big::after {
+  content: "Happy Bday Chika! 🎂";
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Pacifico", cursive;
+  font-size: 1.1rem;
+  color: var(--dark);
 }
 
 .footer-avatar-big img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
@@ -709,16 +800,20 @@ h1 {
   .polaroid-big {
     width: 280px;
   }
+  .photo-side {
+    width: 220px;
+  }
   .surprise-photo-wrap {
-    width: 230px;
-    height: 230px;
+    width: 240px;
   }
   .footer-avatar-big {
-    width: 220px;
-    height: 220px;
+    width: 260px;
   }
   .cake {
     width: 280px;
+  }
+  .cake-photo {
+    width: 170px;
   }
   .candle {
     width: 32px;
