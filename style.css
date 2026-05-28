@@ -149,17 +149,17 @@ h1 {
   margin-bottom: 1.5rem;
 }
 
-/* PHOTO SLOT */
+/* PHOTO SLOT - HERO */
 .photo-wrap {
   position: relative;
   margin: 1rem auto 1.5rem;
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
 }
 
 .photo-ring {
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   padding: 4px;
   background: linear-gradient(135deg, var(--pink), var(--purple), var(--blue), var(--yellow));
@@ -185,7 +185,6 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   position: relative;
   border: 3px solid white;
 }
@@ -194,45 +193,7 @@ h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: none;
-}
-
-.photo-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  color: var(--purple);
-}
-
-.photo-placeholder span:first-child {
-  font-size: 2.5rem;
-}
-.photo-placeholder span:last-child {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--pink);
-}
-
-.photo-label {
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  border: 2px solid var(--pink);
-  color: var(--pink);
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 2px 10px;
-  border-radius: 100px;
-  white-space: nowrap;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.3);
-}
-
-#photo-input {
-  display: none;
+  display: block;
 }
 
 .subtitle {
@@ -264,10 +225,168 @@ h1 {
   }
 }
 
+/* ===== POLAROID (Generic) ===== */
+.polaroid {
+  background: white;
+  padding: 8px 8px 28px 8px;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: inline-block;
+  position: relative;
+}
+
+.polaroid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #eee;
+}
+
+.polaroid-cap {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: "Pacifico", cursive;
+  font-size: 0.75rem;
+  color: var(--dark);
+}
+
+.polaroid::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 50px;
+  height: 14px;
+  background: rgba(255, 209, 102, 0.7);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Floating polaroid in hero */
+.polaroid-float {
+  position: absolute;
+  top: -10px;
+  right: -60px;
+  width: 85px;
+  transform: rotate(12deg);
+  z-index: 3;
+}
+
+.polaroid-float::before {
+  background: rgba(199, 125, 255, 0.7);
+}
+
+/* Countdown side polaroid */
+.countdown-wrap {
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.polaroid-side {
+  position: absolute;
+  top: -50px;
+  right: -10px;
+  width: 95px;
+  transform: rotate(-8deg);
+  z-index: 2;
+}
+
+/* Wish polaroids */
+.polaroid-wish {
+  width: 130px;
+  margin: 1rem auto;
+  display: block;
+}
+
+.polaroid-left {
+  transform: rotate(-6deg) translateX(-30px);
+  margin-left: 0;
+}
+
+.polaroid-right {
+  transform: rotate(6deg) translateX(30px);
+  margin-right: 0;
+}
+
+.polaroid-center {
+  transform: rotate(-2deg);
+}
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal-target {
+  opacity: 0;
+  transform: translateY(20px) scale(0.85);
+  transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.polaroid-float.reveal-target {
+  transform: translateY(-20px) scale(0.5) rotate(40deg);
+}
+.polaroid-float.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(12deg);
+}
+
+.polaroid-side.reveal-target {
+  transform: translateX(40px) scale(0.6) rotate(20deg);
+}
+.polaroid-side.revealed {
+  opacity: 1;
+  transform: translateX(0) scale(1) rotate(-8deg);
+}
+
+.polaroid-left.reveal-target {
+  transform: translateX(-60px) scale(0.7) rotate(-30deg);
+}
+.polaroid-left.revealed {
+  opacity: 1;
+  transform: translateX(-30px) scale(1) rotate(-6deg);
+}
+
+.polaroid-right.reveal-target {
+  transform: translateX(60px) scale(0.7) rotate(30deg);
+}
+.polaroid-right.revealed {
+  opacity: 1;
+  transform: translateX(30px) scale(1) rotate(6deg);
+}
+
+.polaroid-center.reveal-target {
+  transform: translateY(40px) scale(0.7) rotate(15deg);
+}
+.polaroid-center.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1) rotate(-2deg);
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.wish-para.reveal-target {
+  transform: translateY(15px);
+}
+.wish-para.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* COUNTDOWN SECTION */
 .section {
   padding: 3rem 1.5rem;
   text-align: center;
+}
+
+.countdown-section {
+  padding-top: 4rem;
 }
 
 .section-title {
@@ -358,7 +477,7 @@ h1 {
   }
 }
 
-/* WISH SECTION - INTERACTIVE */
+/* WISH SECTION */
 .wish-section {
   background: linear-gradient(160deg, #fff0f7 0%, #f5eeff 100%);
   padding: 3rem 1.5rem;
@@ -369,10 +488,18 @@ h1 {
   background: white;
   border-radius: 24px;
   padding: 2rem 1.5rem;
-  max-width: 360px;
+  max-width: 380px;
   margin: 0 auto;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   position: relative;
+}
+
+.wish-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
   overflow: hidden;
 }
 
@@ -407,16 +534,23 @@ h1 {
   }
 }
 
-.wish-text {
+.wish-para {
   font-size: 1rem;
   line-height: 1.8;
   color: #5a4b6b;
-  margin-bottom: 1.5rem;
+  margin: 0.5rem 0;
 }
 
-.wish-text b {
+.wish-para b {
   color: var(--pink);
   font-weight: 900;
+}
+
+.wish-signature {
+  font-family: "Pacifico", cursive;
+  font-size: 1.3rem;
+  color: var(--purple);
+  margin-top: 1.5rem;
 }
 
 /* MAGIC BUTTON */
@@ -427,9 +561,15 @@ h1 {
 }
 
 .magic-hint {
-  font-size: 0.85rem;
-  color: #999;
+  font-size: 0.9rem;
+  color: #777;
   margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.magic-hint small {
+  color: var(--pink);
+  font-weight: 700;
 }
 
 .magic-btn {
@@ -467,6 +607,28 @@ h1 {
   opacity: 0.1;
 }
 
+/* Memory progress dots */
+.memory-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+
+.memory-progress .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e6dff0;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.memory-progress .dot.active {
+  background: linear-gradient(135deg, var(--pink), var(--purple));
+  transform: scale(1.3);
+  box-shadow: 0 2px 8px rgba(199, 125, 255, 0.5);
+}
+
 .surprise-box {
   margin-top: 2rem;
   display: none;
@@ -486,8 +648,26 @@ h1 {
   margin: 0 auto;
 }
 
+.surprise-photo-wrap {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid white;
+  box-shadow: 0 6px 20px rgba(199, 125, 255, 0.4);
+  background: white;
+}
+
+.surprise-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .surprise-emoji {
-  font-size: 3rem;
+  font-size: 2.5rem;
   display: block;
   margin-bottom: 0.75rem;
 }
@@ -541,9 +721,34 @@ h1 {
   background: var(--dark);
   color: white;
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   font-size: 0.85rem;
   line-height: 2;
+}
+
+.footer-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 1rem;
+  border: 3px solid var(--pink);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5);
+}
+
+.footer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.footer-avatar.reveal-target {
+  transform: scale(0.3) rotate(-180deg);
+}
+.footer-avatar.revealed {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
 }
 
 .footer .heart {
@@ -565,6 +770,17 @@ h1 {
   .count-num {
     font-size: 2.5rem;
   }
+  .polaroid-float {
+    width: 110px;
+    right: -50px;
+  }
+  .polaroid-side {
+    width: 120px;
+    right: -50px;
+  }
+  .polaroid-wish {
+    width: 150px;
+  }
 }
 
 /* ====== EDIT ZONE ====== */
@@ -573,7 +789,7 @@ h1 {
   border: 2px dashed var(--yellow);
   border-radius: 16px;
   padding: 1rem;
-  margin: 1rem auto;
+  margin: 1.5rem auto;
   max-width: 360px;
   font-size: 0.8rem;
   color: #92720a;

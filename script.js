@@ -8,21 +8,33 @@ const BIRTHDAY_DAY = 26; // Ganti ke tanggal Chika
 const BIRTHDAY_YEAR_OVERRIDE = null; // null = otomatis tahun ini/depan
 
 // ==========================================
-// FOTO
+// PROGRESSIVE PHOTO REVEAL (Intersection Observer)
 // ==========================================
-document.getElementById("photo-input").addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function (ev) {
-    const img = document.getElementById("photo-img");
-    img.src = ev.target.result;
-    img.style.display = "block";
-    document.getElementById("photo-ph").style.display = "none";
-    fireConfetti(80);
-  };
-  reader.readAsDataURL(file);
-});
+const revealTargets = document.querySelectorAll(".reveal-target");
+
+const io = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = parseInt(el.dataset.delay || "0", 10);
+        setTimeout(() => {
+          el.classList.add("revealed");
+          if (el.classList.contains("polaroid")) {
+            fireConfetti(15);
+          }
+          if (el.classList.contains("footer-avatar")) {
+            fireConfetti(60);
+          }
+        }, delay);
+        io.unobserve(el);
+      }
+    });
+  },
+  { threshold: 0.25, rootMargin: "0px 0px -50px 0px" }
+);
+
+revealTargets.forEach((el) => io.observe(el));
 
 // ==========================================
 // COUNTDOWN
@@ -72,26 +84,29 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 // ==========================================
-// SURPRISE BUTTON
+// SURPRISE BUTTON - dengan foto reveal
+// Foto 7, 8, 9, 10 muncul progresif
 // ==========================================
 const surprises = [
-  { emoji: "🌟", msg: "Kamu adalah bintang paling terang di langitku! Tetap bersinar ya, Chika! ✨" },
-  { emoji: "🌸", msg: "Seperti bunga yang mekar indah — semoga hidup Chika selalu berwarna dan harum! 🌸" },
-  { emoji: "🦋", msg: "Kamu sudah tumbuh menjadi kupu-kupu yang cantik luar dalam. Selamat ulang tahun! 🦋" },
-  { emoji: "🍰", msg: "Satu kue tidak cukup untuk merayakan keistimewaanmu, Chika! Kamu luar biasa! 🎂" },
-  { emoji: "🌈", msg: "Badai pasti berlalu, dan pelangi indah menunggumu di baliknya. Happy birthday! 🌈" },
-  { emoji: "💫", msg: "Semua impianmu layak jadi nyata. Percaya diri ya, Chika! You got this! 💪✨" },
-  { emoji: "🎶", msg: "Hidup itu seperti lagu — ada nada tinggi dan rendah, tapi tetap indah karena dijalani. 🎵" },
-  { emoji: "🍓", msg: "Manis seperti strawberry, segar selalu jiwanya. Selamat ulang tahun, Chika! 🍓" },
+  { photo: "assets/7.png", emoji: "🌟", msg: "Kamu adalah bintang paling terang di langitku! Tetap bersinar ya, Chika! ✨" },
+  { photo: "assets/8.png", emoji: "🦋", msg: "Kamu sudah tumbuh menjadi kupu-kupu yang cantik luar dalam. Selamat ulang tahun! 🦋" },
+  { photo: "assets/9.png", emoji: "🌸", msg: "Seperti bunga yang mekar indah — semoga hidup Chika selalu berwarna dan harum! 🌸" },
+  { photo: "assets/10.png", emoji: "💫", msg: "Semua impianmu layak jadi nyata. Percaya diri ya, Chika! You got this! 💪✨" },
+  // Setelah 4 foto pertama, cycle ulang dengan pesan tambahan
+  { photo: "assets/7.png", emoji: "🍰", msg: "Satu kue tidak cukup untuk merayakan keistimewaanmu, Chika! Kamu luar biasa! 🎂" },
+  { photo: "assets/8.png", emoji: "🌈", msg: "Badai pasti berlalu, dan pelangi indah menunggumu di baliknya. Happy birthday! 🌈" },
+  { photo: "assets/9.png", emoji: "🎶", msg: "Hidup itu seperti lagu — ada nada tinggi dan rendah, tapi tetap indah karena dijalani. 🎵" },
+  { photo: "assets/10.png", emoji: "🍓", msg: "Manis seperti strawberry, segar selalu jiwanya. Selamat ulang tahun, Chika! 🍓" },
 ];
 
 let surpriseIdx = 0;
+const TOTAL_NEW_PHOTOS = 4; // 4 foto baru sebelum cycle
 
 function showSurprise() {
   const box = document.getElementById("surprise-box");
   const pick = surprises[surpriseIdx % surprises.length];
-  surpriseIdx++;
 
+  document.getElementById("surprise-photo").src = pick.photo;
   document.getElementById("surprise-emoji").textContent = pick.emoji;
   document.getElementById("surprise-msg").textContent = pick.msg;
 
@@ -99,13 +114,27 @@ function showSurprise() {
   void box.offsetWidth; // reflow for re-animation
   box.classList.add("visible");
 
+  // Update progress dots (max 4)
+  const dots = document.querySelectorAll(".memory-progress .dot");
+  dots.forEach((d, i) => {
+    if (i <= Math.min(surpriseIdx, TOTAL_NEW_PHOTOS - 1)) {
+      d.classList.add("active");
+    }
+  });
+
   fireConfetti(60);
 
+  surpriseIdx++;
+
   const btn = document.getElementById("magic-btn");
-  btn.textContent = surpriseIdx < surprises.length ? "🎁 Buka Lagi!" : "🎉 Semua Kejutan!";
-  if (surpriseIdx >= surprises.length) {
+  if (surpriseIdx < TOTAL_NEW_PHOTOS) {
+    btn.textContent = "🎁 Buka Memori Berikutnya!";
+  } else if (surpriseIdx < surprises.length) {
+    btn.textContent = "💝 Pesan Manis Lagi!";
+  } else {
+    btn.textContent = "🔄 Ulang dari Awal!";
     surpriseIdx = 0;
-    btn.textContent = "🔄 Ulang Lagi!";
+    dots.forEach((d) => d.classList.remove("active"));
   }
 }
 

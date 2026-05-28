@@ -27,20 +27,19 @@
       <h1>Happy Birthday</h1>
       <span class="name">Chika!</span>
 
-      <!-- PHOTO SLOT -->
+      <!-- HERO PHOTO (Foto 2 - auto load) -->
       <div class="photo-wrap">
         <div class="photo-ring">
-          <div class="photo-inner" id="photo-tap" onclick="document.getElementById('photo-input').click()">
-            <img id="photo-img" alt="Foto Chika" />
-            <div class="photo-placeholder" id="photo-ph">
-              <span>👧</span>
-              <span>TAP TO ADD FOTO</span>
-            </div>
+          <div class="photo-inner">
+            <img src="assets/2.png" alt="Foto Chika" />
           </div>
         </div>
-        <label class="photo-label" for="photo-input">📷 Ganti Foto</label>
+        <!-- Polaroid mini floating (Foto 1 - delayed) -->
+        <div class="polaroid polaroid-float reveal-target" data-photo="1" data-delay="1500">
+          <img src="assets/1.png" alt="Chika 1" />
+          <span class="polaroid-cap">cutiee 💕</span>
+        </div>
       </div>
-      <input type="file" id="photo-input" accept="image/*" />
 
       <p class="subtitle">Semoga hari ini penuh kebahagiaan, tawa, dan semua hal indah yang kamu impikan! 🌸</p>
 
@@ -51,30 +50,40 @@
     </section>
 
     <!-- COUNTDOWN -->
-    <section class="section">
+    <section class="section countdown-section">
       <div class="section-title">⏰ Countdown ke Hari-H</div>
-      <div class="countdown-grid" id="countdown-grid">
-        <div class="count-box">
-          <div class="count-num" id="cd-days">00</div>
-          <div class="count-label">Hari</div>
+
+      <div class="countdown-wrap">
+        <div class="countdown-grid" id="countdown-grid">
+          <div class="count-box">
+            <div class="count-num" id="cd-days">00</div>
+            <div class="count-label">Hari</div>
+          </div>
+          <div class="count-box">
+            <div class="count-num" id="cd-hours">00</div>
+            <div class="count-label">Jam</div>
+          </div>
+          <div class="count-box">
+            <div class="count-num" id="cd-min">00</div>
+            <div class="count-label">Menit</div>
+          </div>
+          <div class="count-box">
+            <div class="count-num" id="cd-sec">00</div>
+            <div class="count-label">Detik</div>
+          </div>
         </div>
-        <div class="count-box">
-          <div class="count-num" id="cd-hours">00</div>
-          <div class="count-label">Jam</div>
-        </div>
-        <div class="count-box">
-          <div class="count-num" id="cd-min">00</div>
-          <div class="count-label">Menit</div>
-        </div>
-        <div class="count-box">
-          <div class="count-num" id="cd-sec">00</div>
-          <div class="count-label">Detik</div>
+
+        <!-- Polaroid Foto 3 - reveal on scroll -->
+        <div class="polaroid polaroid-side reveal-target" data-photo="3">
+          <img src="assets/3.png" alt="Chika 3" />
+          <span class="polaroid-cap">soon... 🎂</span>
         </div>
       </div>
+
       <div class="birthday-banner" id="bday-banner">🎂 Selamat Ulang Tahun Chika! 🎂</div>
       <p style="font-size: 0.75rem; color: #aaa; margin-top: 0.75rem" id="target-date-label"></p>
 
-      <div class="edit-note">✏️ <b>Edit tanggal ulang tahun:</b> Buka file HTML, cari <code>BIRTHDAY_DATE</code> lalu ganti ke tanggal Chika yang sebenarnya.</div>
+      <div class="edit-note">✏️ <b>Edit tanggal ulang tahun:</b> Buka file <code>script.js</code>, cari <code>BIRTHDAY_DATE</code> lalu ganti ke tanggal Chika.</div>
     </section>
 
     <!-- WISH CARD -->
@@ -82,22 +91,55 @@
       <div class="section-title">💌 Ucapan Spesial</div>
       <div class="wish-card">
         <span class="wish-emoji">🎂</span>
-        <p class="wish-text">
-          Hei <b>Chika Nurfadillah</b>! 🌸<br /><br />
-          Di hari yang spesial ini, semoga segala impian dan harapanmu terwujud satu per satu. Kamu adalah orang yang luar biasa, dan dunia lebih berwarna karena kamu ada. 🌈<br /><br />
-          Semoga tahun ini dipenuhi kebahagiaan, kesehatan, dan semua hal indah yang kamu layak dapatkan. Panjang umur, bahagia selalu! 🎉✨<br /><br />
-          With love 💕
+
+        <p class="wish-para reveal-target" data-photo-slot="p1">
+          Hei <b>Chika Nurfadillah</b>! 🌸
         </p>
+        <div class="polaroid polaroid-wish polaroid-left reveal-target" data-photo="4">
+          <img src="assets/4.png" alt="Chika 4" />
+          <span class="polaroid-cap">hi cantik ✨</span>
+        </div>
+
+        <p class="wish-para reveal-target" data-photo-slot="p2">
+          Di hari yang spesial ini, semoga segala impian dan harapanmu terwujud satu per satu. Kamu adalah orang yang luar biasa, dan dunia lebih berwarna karena kamu ada. 🌈
+        </p>
+        <div class="polaroid polaroid-wish polaroid-right reveal-target" data-photo="5">
+          <img src="assets/5.png" alt="Chika 5" />
+          <span class="polaroid-cap">shining ⭐</span>
+        </div>
+
+        <p class="wish-para reveal-target" data-photo-slot="p3">
+          Semoga tahun ini dipenuhi kebahagiaan, kesehatan, dan semua hal indah yang kamu layak dapatkan. Panjang umur, bahagia selalu! 🎉✨
+        </p>
+        <div class="polaroid polaroid-wish polaroid-center reveal-target" data-photo="6">
+          <img src="assets/6.png" alt="Chika 6" />
+          <span class="polaroid-cap">always smile 🌷</span>
+        </div>
+
+        <p class="wish-signature">With love 💕</p>
       </div>
     </section>
 
     <!-- MAGIC BUTTON -->
     <section class="magic-section">
       <div class="section-title">🎁 Ada Kejutan!</div>
-      <p class="magic-hint">Tekan tombol di bawah untuk membuka kejutan~</p>
+      <p class="magic-hint">Tekan tombol di bawah untuk membuka kejutan~ <br/><small>Setiap klik buka memori baru 💝</small></p>
       <button class="magic-btn" id="magic-btn" onclick="showSurprise()">🎁 Buka Hadiahku!</button>
+
+      <!-- Progress dots -->
+      <div class="memory-progress" id="memory-progress">
+        <span class="dot" data-i="0"></span>
+        <span class="dot" data-i="1"></span>
+        <span class="dot" data-i="2"></span>
+        <span class="dot" data-i="3"></span>
+      </div>
+
       <div class="surprise-box" id="surprise-box">
         <div class="surprise-card">
+          <!-- Photo akan di-inject di sini -->
+          <div class="surprise-photo-wrap" id="surprise-photo-wrap">
+            <img id="surprise-photo" alt="memory" />
+          </div>
           <span class="surprise-emoji" id="surprise-emoji">🌟</span>
           <p class="surprise-msg" id="surprise-msg">Loading...</p>
         </div>
@@ -106,8 +148,12 @@
 
     <!-- FOOTER -->
     <footer class="footer">
+      <!-- Foto 11 - signature avatar -->
+      <div class="footer-avatar reveal-target" data-photo="11">
+        <img src="assets/11.png" alt="Chika signature" />
+      </div>
       <p>Made with <span class="heart">❤️</span> for</p>
-      <p style="font-family: &quot;Pacifico&quot;, cursive; font-size: 1.2rem; color: var(--purple)">Chika Nurfadillah</p>
+      <p style="font-family: &quot;Pacifico&quot;, cursive; font-size: 1.3rem; color: var(--purple)">Chika Nurfadillah</p>
       <p style="margin-top: 0.5rem; color: #aaa; font-size: 0.75rem">🎂 Happy Birthday 🎂</p>
     </footer>
 
