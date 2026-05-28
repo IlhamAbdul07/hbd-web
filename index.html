@@ -11,152 +11,206 @@
   <body>
     <canvas id="confetti-canvas"></canvas>
 
-    <!-- MUSIC BUTTON -->
-    <button class="music-fab" id="music-btn" title="Play music" aria-label="Toggle music">🎵</button>
+    <!-- Progress bar (langkah berapa) -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="balloons">
-        <span class="balloon">🎈</span>
-        <span class="balloon" style="animation-delay: 0.5s">🎀</span>
-        <span class="balloon" style="animation-delay: 1s">🎈</span>
-      </div>
-
-      <div class="badge">✨ Special Day Alert ✨</div>
-
-      <h1>Happy Birthday</h1>
-      <span class="name">Chika!</span>
-
-      <!-- HERO PHOTO (Foto 2 - auto load) -->
-      <div class="photo-wrap">
-        <div class="photo-ring">
-          <div class="photo-inner">
-            <img src="assets/2.png" alt="Foto Chika" />
+    <main id="app">
+      <!-- ========== STEP 1: WELCOME ========== -->
+      <section class="step active" data-step="1">
+        <div class="step-inner">
+          <div class="balloons">
+            <span class="balloon">🎈</span>
+            <span class="balloon" style="animation-delay: 0.5s">🎀</span>
+            <span class="balloon" style="animation-delay: 1s">🎈</span>
           </div>
-        </div>
-        <!-- Polaroid mini floating (Foto 1 - delayed) -->
-        <div class="polaroid polaroid-float reveal-target" data-photo="1" data-delay="1500">
-          <img src="assets/1.png" alt="Chika 1" />
-          <span class="polaroid-cap">cutiee 💕</span>
-        </div>
-      </div>
 
-      <p class="subtitle">Semoga hari ini penuh kebahagiaan, tawa, dan semua hal indah yang kamu impikan! 🌸</p>
+          <div class="badge">✨ Special Moment ✨</div>
 
-      <div class="scroll-hint">
-        <span>Scroll ke bawah</span>
-        <span>↓</span>
-      </div>
-    </section>
+          <h1>Happy Birthday</h1>
+          <span class="name">Chika!</span>
 
-    <!-- COUNTDOWN -->
-    <section class="section countdown-section">
-      <div class="section-title">⏰ Countdown ke Hari-H</div>
-
-      <div class="countdown-wrap">
-        <div class="countdown-grid" id="countdown-grid">
-          <div class="count-box">
-            <div class="count-num" id="cd-days">00</div>
-            <div class="count-label">Hari</div>
+          <div class="photo-wrap">
+            <div class="photo-ring">
+              <div class="photo-inner">
+                <img src="assets/2.webp" alt="Foto Chika" />
+              </div>
+            </div>
           </div>
-          <div class="count-box">
-            <div class="count-num" id="cd-hours">00</div>
-            <div class="count-label">Jam</div>
+
+          <p class="subtitle">
+            Hari ini hari kamu, Chika! 🎉<br />
+            Semoga tahun ini lebih seru dari kemarin, rezekinya ngalir, dan tetap jadi diri kamu yang asik.
+            <i>Have the best day!</i> ✨
+          </p>
+
+          <button class="nav-btn primary" data-next>Yuk Mulai! →</button>
+        </div>
+      </section>
+
+      <!-- ========== STEP 2: MUSIC ========== -->
+      <section class="step" data-step="2">
+        <div class="step-inner">
+          <div class="emoji-hero">🎵</div>
+          <h2 class="step-title">Nyalain Musiknya Dulu Yuk!</h2>
+          <p class="step-desc">Biar suasana ulang tahunnya makin terasa, tap tombol di bawah ini untuk play lagu Happy Birthday 🎶</p>
+
+          <div class="photo-side">
+            <img src="assets/1.webp" alt="Chika" />
           </div>
-          <div class="count-box">
-            <div class="count-num" id="cd-min">00</div>
-            <div class="count-label">Menit</div>
+
+          <button class="music-big" id="music-big-btn">
+            <span class="music-icon">▶️</span>
+            <span class="music-label">Play Music</span>
+          </button>
+
+          <p class="music-hint-text" id="music-hint">↑ Tap di atas untuk mulai 🎵</p>
+
+          <button class="nav-btn primary hidden" id="step2-next" data-next>Lanjut →</button>
+        </div>
+      </section>
+
+      <!-- ========== STEP 3: CAKE (Light + Blow) ========== -->
+      <section class="step" data-step="3">
+        <div class="step-inner">
+          <h2 class="step-title" id="cake-title">Nyalain Lilinnya! 🕯️</h2>
+          <p class="step-desc" id="cake-desc">Tap satu-satu lilin di bawah untuk menyalakannya. Make a wish ya, Chika!</p>
+
+          <div class="cake-stage">
+            <div class="cake">
+              <div class="cake-candles">
+                <div class="candle" data-i="0"><span class="candle-stick"></span><span class="flame"></span></div>
+                <div class="candle" data-i="1"><span class="candle-stick"></span><span class="flame"></span></div>
+                <div class="candle" data-i="2"><span class="candle-stick"></span><span class="flame"></span></div>
+                <div class="candle" data-i="3"><span class="candle-stick"></span><span class="flame"></span></div>
+                <div class="candle" data-i="4"><span class="candle-stick"></span><span class="flame"></span></div>
+              </div>
+              <div class="cake-top-layer">
+                <div class="drip"></div>
+                <div class="drip"></div>
+                <div class="drip"></div>
+                <div class="drip"></div>
+                <div class="drip"></div>
+              </div>
+              <div class="cake-bottom-layer">
+                <span class="sprinkle" style="left: 15%; background: var(--pink)"></span>
+                <span class="sprinkle" style="left: 35%; background: var(--yellow)"></span>
+                <span class="sprinkle" style="left: 55%; background: var(--teal)"></span>
+                <span class="sprinkle" style="left: 75%; background: var(--purple)"></span>
+              </div>
+              <div class="cake-plate"></div>
+            </div>
+
+            <div class="cake-photo">
+              <img src="assets/3.webp" alt="Chika 3" />
+            </div>
           </div>
-          <div class="count-box">
-            <div class="count-num" id="cd-sec">00</div>
-            <div class="count-label">Detik</div>
+
+          <div class="cake-progress" id="cake-progress">
+            <span>Lilin menyala: <b id="candle-count">0</b>/5</span>
           </div>
+
+          <button class="nav-btn blow hidden" id="blow-btn">💨 TIUP LILINNYA!</button>
+          <button class="nav-btn primary hidden" id="cake-next" data-next>Lanjut →</button>
         </div>
+      </section>
 
-        <!-- Polaroid Foto 3 - reveal on scroll -->
-        <div class="polaroid polaroid-side reveal-target" data-photo="3">
-          <img src="assets/3.png" alt="Chika 3" />
-          <span class="polaroid-cap">soon... 🎂</span>
-        </div>
-      </div>
-
-      <div class="birthday-banner" id="bday-banner">🎂 Selamat Ulang Tahun Chika! 🎂</div>
-      <p style="font-size: 0.75rem; color: #aaa; margin-top: 0.75rem" id="target-date-label"></p>
-
-      <div class="edit-note">✏️ <b>Edit tanggal ulang tahun:</b> Buka file <code>script.js</code>, cari <code>BIRTHDAY_DATE</code> lalu ganti ke tanggal Chika.</div>
-    </section>
-
-    <!-- WISH CARD -->
-    <section class="wish-section">
-      <div class="section-title">💌 Ucapan Spesial</div>
-      <div class="wish-card">
-        <span class="wish-emoji">🎂</span>
-
-        <p class="wish-para reveal-target" data-photo-slot="p1">
-          Hei <b>Chika Nurfadillah</b>! 🌸
-        </p>
-        <div class="polaroid polaroid-wish polaroid-left reveal-target" data-photo="4">
-          <img src="assets/4.png" alt="Chika 4" />
-          <span class="polaroid-cap">hi cantik ✨</span>
-        </div>
-
-        <p class="wish-para reveal-target" data-photo-slot="p2">
-          Di hari yang spesial ini, semoga segala impian dan harapanmu terwujud satu per satu. Kamu adalah orang yang luar biasa, dan dunia lebih berwarna karena kamu ada. 🌈
-        </p>
-        <div class="polaroid polaroid-wish polaroid-right reveal-target" data-photo="5">
-          <img src="assets/5.png" alt="Chika 5" />
-          <span class="polaroid-cap">shining ⭐</span>
-        </div>
-
-        <p class="wish-para reveal-target" data-photo-slot="p3">
-          Semoga tahun ini dipenuhi kebahagiaan, kesehatan, dan semua hal indah yang kamu layak dapatkan. Panjang umur, bahagia selalu! 🎉✨
-        </p>
-        <div class="polaroid polaroid-wish polaroid-center reveal-target" data-photo="6">
-          <img src="assets/6.png" alt="Chika 6" />
-          <span class="polaroid-cap">always smile 🌷</span>
-        </div>
-
-        <p class="wish-signature">With love 💕</p>
-      </div>
-    </section>
-
-    <!-- MAGIC BUTTON -->
-    <section class="magic-section">
-      <div class="section-title">🎁 Ada Kejutan!</div>
-      <p class="magic-hint">Tekan tombol di bawah untuk membuka kejutan~ <br/><small>Setiap klik buka memori baru 💝</small></p>
-      <button class="magic-btn" id="magic-btn" onclick="showSurprise()">🎁 Buka Hadiahku!</button>
-
-      <!-- Progress dots -->
-      <div class="memory-progress" id="memory-progress">
-        <span class="dot" data-i="0"></span>
-        <span class="dot" data-i="1"></span>
-        <span class="dot" data-i="2"></span>
-        <span class="dot" data-i="3"></span>
-      </div>
-
-      <div class="surprise-box" id="surprise-box">
-        <div class="surprise-card">
-          <!-- Photo akan di-inject di sini -->
-          <div class="surprise-photo-wrap" id="surprise-photo-wrap">
-            <img id="surprise-photo" alt="memory" />
+      <!-- ========== STEP 4: WISH 1 ========== -->
+      <section class="step wish-step" data-step="4">
+        <div class="step-inner">
+          <h2 class="step-title-script">💌 Ucapan #1</h2>
+          <div class="polaroid polaroid-big">
+            <img src="assets/4.webp" alt="Chika 4" />
+            <span class="polaroid-cap">hi cantik ✨</span>
           </div>
-          <span class="surprise-emoji" id="surprise-emoji">🌟</span>
-          <p class="surprise-msg" id="surprise-msg">Loading...</p>
+          <p class="wish-paragraph">
+            Hei <b>Chika Nurfadillah</b>! 🌸<br />
+            Selamat ulang tahun ya! Hari ini hari spesial buat kamu, dan aku seneng banget bisa ngucapin walau lewat website kecil ini.
+          </p>
+          <button class="nav-btn primary" data-next>Lanjut →</button>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <!-- Foto 11 - signature avatar -->
-      <div class="footer-avatar reveal-target" data-photo="11">
-        <img src="assets/11.png" alt="Chika signature" />
-      </div>
-      <p>Made with <span class="heart">❤️</span> for</p>
-      <p style="font-family: &quot;Pacifico&quot;, cursive; font-size: 1.3rem; color: var(--purple)">Chika Nurfadillah</p>
-      <p style="margin-top: 0.5rem; color: #aaa; font-size: 0.75rem">🎂 Happy Birthday 🎂</p>
-    </footer>
+      <!-- ========== STEP 5: WISH 2 ========== -->
+      <section class="step wish-step" data-step="5">
+        <div class="step-inner">
+          <h2 class="step-title-script">💌 Ucapan #2</h2>
+          <div class="polaroid polaroid-big">
+            <img src="assets/5.webp" alt="Chika 5" />
+            <span class="polaroid-cap">shining ⭐</span>
+          </div>
+          <p class="wish-paragraph">Semoga semua impian dan target kamu tahun ini bisa kejar satu per satu. Kamu orang yang asik, dan circle kamu beruntung punya temen kayak kamu. 🌈</p>
+          <button class="nav-btn primary" data-next>Lanjut →</button>
+        </div>
+      </section>
 
-    <script src="script.js"></script>
+      <!-- ========== STEP 6: WISH 3 ========== -->
+      <section class="step wish-step" data-step="6">
+        <div class="step-inner">
+          <h2 class="step-title-script">💌 Ucapan #3</h2>
+          <div class="polaroid polaroid-big">
+            <img src="assets/6.webp" alt="Chika 6" />
+            <span class="polaroid-cap">always smile 🌷</span>
+          </div>
+          <p class="wish-paragraph">Semoga tahun ini sehat selalu, rezekinya ngalir, dan tetap jadi diri kamu yang asik & apa adanya. Panjang umur, bahagia selalu ya! 🎉✨</p>
+          <button class="nav-btn primary" data-next>Lanjut →</button>
+        </div>
+      </section>
+
+      <!-- ========== STEP 7: SURPRISE ========== -->
+      <section class="step" data-step="7">
+        <div class="step-inner">
+          <h2 class="step-title">🎁 Ada Kejutan!</h2>
+          <p class="step-desc">
+            Tap tombol di bawah untuk buka kejutan satu per satu~ <br />
+            <small>Setiap klik buka memori baru 💝</small>
+          </p>
+
+          <button class="nav-btn primary" id="magic-btn" onclick="showSurprise()">🎁 Buka Hadiahku!</button>
+
+          <div class="surprise-box" id="surprise-box">
+            <div class="surprise-card">
+              <div class="surprise-photo-wrap">
+                <img id="surprise-photo" alt="memory" />
+              </div>
+              <span class="surprise-emoji" id="surprise-emoji">🌟</span>
+              <p class="surprise-msg" id="surprise-msg">Loading...</p>
+            </div>
+          </div>
+
+          <!-- Progress dots -->
+          <div class="memory-progress" id="memory-progress">
+            <span class="dot" data-i="0"></span>
+            <span class="dot" data-i="1"></span>
+            <span class="dot" data-i="2"></span>
+            <span class="dot" data-i="3"></span>
+          </div>
+
+          <!-- Tombol Lanjut: DIBAWAH card -->
+          <button class="nav-btn primary hidden" id="surprise-next" data-next>Lihat Penutup →</button>
+        </div>
+      </section>
+
+      <!-- ========== STEP 8: FINAL ========== -->
+      <section class="step" data-step="8">
+        <div class="step-inner">
+          <div class="footer-avatar-big">
+            <img src="assets/11.webp" alt="Chika signature" />
+          </div>
+
+          <h2 class="step-title-script">Have the best day,<br />Chika! 🎂</h2>
+
+          <p class="final-text">
+            Makasih udah jadi temen yang seru. <br />
+            Semoga hari ini & tahun-tahun ke depan selalu menyenangkan buat kamu. <br /><br />
+            <i>From me, with friendship</i> ✨
+          </p>
+
+          <button class="nav-btn ghost" id="restart-btn">🔄 Mulai dari Awal</button>
+        </div>
+      </section>
+    </main>
   </body>
+  <script src="script.js"></script>
 </html>

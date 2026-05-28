@@ -1,110 +1,143 @@
 // ==========================================
-// EDIT INI: Tanggal ulang tahun Chika
-// Format: bulan (0-11), tanggal, tahun
-// Contoh: 5 = Juni (0-indexed)
+// STEP NAVIGATION (Wizard)
 // ==========================================
-const BIRTHDAY_MONTH = 5; // Ganti: 0=Jan, 1=Feb, ..., 11=Des
-const BIRTHDAY_DAY = 26; // Ganti ke tanggal Chika
-const BIRTHDAY_YEAR_OVERRIDE = null; // null = otomatis tahun ini/depan
+const steps = document.querySelectorAll(".step");
+const TOTAL_STEPS = steps.length;
+let currentStep = 1;
 
-// ==========================================
-// PROGRESSIVE PHOTO REVEAL (Intersection Observer)
-// ==========================================
-const revealTargets = document.querySelectorAll(".reveal-target");
+function goToStep(n) {
+  if (n < 1 || n > TOTAL_STEPS) return;
+  const prev = document.querySelector(`.step[data-step="${currentStep}"]`);
+  const next = document.querySelector(`.step[data-step="${n}"]`);
+  if (!next) return;
 
-const io = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const delay = parseInt(el.dataset.delay || "0", 10);
-        setTimeout(() => {
-          el.classList.add("revealed");
-          if (el.classList.contains("polaroid")) {
-            fireConfetti(15);
-          }
-          if (el.classList.contains("footer-avatar")) {
-            fireConfetti(60);
-          }
-        }, delay);
-        io.unobserve(el);
-      }
-    });
-  },
-  { threshold: 0.25, rootMargin: "0px 0px -50px 0px" }
-);
+  prev.classList.remove("active");
+  prev.classList.add("exit");
+  setTimeout(() => prev.classList.remove("exit"), 500);
 
-revealTargets.forEach((el) => io.observe(el));
+  next.classList.add("active");
+  currentStep = n;
 
-// ==========================================
-// COUNTDOWN
-// ==========================================
-function getNextBirthday() {
-  const now = new Date();
-  let year = BIRTHDAY_YEAR_OVERRIDE || now.getFullYear();
-  let bd = new Date(year, BIRTHDAY_MONTH, BIRTHDAY_DAY, 0, 0, 0);
-  if (bd < now && !BIRTHDAY_YEAR_OVERRIDE) {
-    bd = new Date(year + 1, BIRTHDAY_MONTH, BIRTHDAY_DAY, 0, 0, 0);
+  // Update progress bar
+  document.getElementById("progress-fill").style.width = (n / TOTAL_STEPS) * 100 + "%";
+
+  // Reset scroll inside the step
+  next.scrollTop = 0;
+
+  // Per-step entry effects
+  onEnterStep(n);
+}
+
+function onEnterStep(n) {
+  if (n === 1) {
+    fireConfetti(80);
   }
-  return bd;
-}
-
-function pad(n) {
-  return String(n).padStart(2, "0");
-}
-
-function updateCountdown() {
-  const target = getNextBirthday();
-  const now = new Date();
-  const diff = target - now;
-  const label = document.getElementById("target-date-label");
-  const options = { day: "numeric", month: "long", year: "numeric" };
-  label.textContent = "Menuju: " + target.toLocaleDateString("id-ID", options);
-
-  if (diff <= 0) {
-    document.getElementById("countdown-grid").style.display = "none";
-    const banner = document.getElementById("bday-banner");
-    banner.style.display = "block";
+  if (n === 4 || n === 5 || n === 6) {
+    fireConfetti(40);
+  }
+  if (n === 8) {
     fireConfetti(150);
-    return;
   }
-
-  const days = Math.floor(diff / 86400000);
-  const hours = Math.floor((diff % 86400000) / 3600000);
-  const mins = Math.floor((diff % 3600000) / 60000);
-  const secs = Math.floor((diff % 60000) / 1000);
-
-  document.getElementById("cd-days").textContent = pad(days);
-  document.getElementById("cd-hours").textContent = pad(hours);
-  document.getElementById("cd-min").textContent = pad(mins);
-  document.getElementById("cd-sec").textContent = pad(secs);
 }
 
-updateCountdown();
-setInterval(updateCountdown, 1000);
+document.querySelectorAll("[data-next]").forEach((btn) => {
+  btn.addEventListener("click", () => goToStep(currentStep + 1));
+});
+
+document.getElementById("restart-btn").addEventListener("click", () => {
+  resetAll();
+  goToStep(1);
+});
+
+function resetAll() {
+  // Reset cake
+  document.querySelectorAll(".candle").forEach((c) => {
+    c.classList.remove("lit", "blown");
+  });
+  candleLit = 0;
+  document.getElementById("candle-count").textContent = "0";
+  document.getElementById("cake-title").textContent = "Nyalain Lilinnya! 🕯️";
+  document.getElementById("cake-desc").textContent = "Tap satu-satu lilin di bawah untuk menyalakannya. Make a wish ya, Chika!";
+  document.getElementById("blow-btn").classList.add("hidden");
+  document.getElementById("cake-next").classList.add("hidden");
+  document.getElementById("cake-progress").classList.remove("hidden");
+
+  // Reset music label
+  isPlaying = false;
+  const mb = document.getElementById("music-big-btn");
+  mb.classList.remove("playing");
+  mb.querySelector(".music-icon").textContent = "▶️";
+  mb.querySelector(".music-label").textContent = "Play Music";
+  document.getElementById("step2-next").classList.add("hidden");
+  if (musicInterval) clearTimeout(musicInterval);
+
+  // Reset surprise
+  surpriseIdx = 0;
+  document.getElementById("surprise-box").classList.remove("visible");
+  document.getElementById("surprise-next").classList.add("hidden");
+  document.querySelectorAll(".memory-progress .dot").forEach((d) => d.classList.remove("active"));
+  document.getElementById("magic-btn").textContent = "🎁 Buka Hadiahku!";
+  document.getElementById("magic-btn").classList.remove("hidden");
+}
 
 // ==========================================
-// SURPRISE BUTTON - dengan foto reveal
-// Foto 7, 8, 9, 10 muncul progresif
+// STEP 3 — CAKE: Light & Blow Candles
+// ==========================================
+let candleLit = 0;
+const TOTAL_CANDLES = 5;
+
+document.querySelectorAll(".candle").forEach((candle) => {
+  candle.addEventListener("click", () => {
+    if (candle.classList.contains("lit") || candle.classList.contains("blown")) return;
+    candle.classList.add("lit");
+    candleLit++;
+    document.getElementById("candle-count").textContent = candleLit;
+    fireConfetti(10);
+
+    if (candleLit === TOTAL_CANDLES) {
+      // All candles lit — show blow button
+      setTimeout(() => {
+        document.getElementById("cake-title").textContent = "Sekarang Tiup Lilinnya! 💨";
+        document.getElementById("cake-desc").textContent = "Make a wish, lalu tap tombol untuk tiup lilinnya~";
+        document.getElementById("cake-progress").classList.add("hidden");
+        document.getElementById("blow-btn").classList.remove("hidden");
+      }, 400);
+    }
+  });
+});
+
+document.getElementById("blow-btn").addEventListener("click", () => {
+  document.querySelectorAll(".candle").forEach((c, i) => {
+    setTimeout(() => {
+      c.classList.remove("lit");
+      c.classList.add("blown");
+    }, i * 120);
+  });
+  fireConfetti(100);
+
+  setTimeout(() => {
+    document.getElementById("cake-title").textContent = "Yaaay! Wish-mu didengar 🌟";
+    document.getElementById("cake-desc").textContent = "Sekarang waktunya baca ucapan spesial untuk kamu~";
+    document.getElementById("blow-btn").classList.add("hidden");
+    document.getElementById("cake-next").classList.remove("hidden");
+  }, 800);
+});
+
+// ==========================================
+// STEP 7 — SURPRISE BUTTON
 // ==========================================
 const surprises = [
-  { photo: "assets/7.png", emoji: "🌟", msg: "Kamu adalah bintang paling terang di langitku! Tetap bersinar ya, Chika! ✨" },
-  { photo: "assets/8.png", emoji: "🦋", msg: "Kamu sudah tumbuh menjadi kupu-kupu yang cantik luar dalam. Selamat ulang tahun! 🦋" },
-  { photo: "assets/9.png", emoji: "🌸", msg: "Seperti bunga yang mekar indah — semoga hidup Chika selalu berwarna dan harum! 🌸" },
-  { photo: "assets/10.png", emoji: "💫", msg: "Semua impianmu layak jadi nyata. Percaya diri ya, Chika! You got this! 💪✨" },
-  // Setelah 4 foto pertama, cycle ulang dengan pesan tambahan
-  { photo: "assets/7.png", emoji: "🍰", msg: "Satu kue tidak cukup untuk merayakan keistimewaanmu, Chika! Kamu luar biasa! 🎂" },
-  { photo: "assets/8.png", emoji: "🌈", msg: "Badai pasti berlalu, dan pelangi indah menunggumu di baliknya. Happy birthday! 🌈" },
-  { photo: "assets/9.png", emoji: "🎶", msg: "Hidup itu seperti lagu — ada nada tinggi dan rendah, tapi tetap indah karena dijalani. 🎵" },
-  { photo: "assets/10.png", emoji: "🍓", msg: "Manis seperti strawberry, segar selalu jiwanya. Selamat ulang tahun, Chika! 🍓" },
+  { photo: "assets/7.webp", emoji: "🌟", msg: "Kamu salah satu temen yang paling fun! Tetap jadi diri sendiri ya, Chika!" },
+  { photo: "assets/8.webp", emoji: "🦋", msg: "Doaku semoga kamu makin sukses sama hal yang kamu kerjain sekarang. Go go!" },
+  { photo: "assets/9.webp", emoji: "🌸", msg: "Mood booster banget kalau lagi ngobrol sama kamu. Tetap sehat selalu ya!" },
+  { photo: "assets/10.webp", emoji: "💫", msg: "Tahun depan harus lebih happy dari tahun ini. Semangat ngejar mimpi kamu!" },
 ];
 
 let surpriseIdx = 0;
-const TOTAL_NEW_PHOTOS = 4; // 4 foto baru sebelum cycle
 
 function showSurprise() {
   const box = document.getElementById("surprise-box");
-  const pick = surprises[surpriseIdx % surprises.length];
+  const pick = surprises[surpriseIdx];
 
   document.getElementById("surprise-photo").src = pick.photo;
   document.getElementById("surprise-emoji").textContent = pick.emoji;
@@ -114,12 +147,10 @@ function showSurprise() {
   void box.offsetWidth; // reflow for re-animation
   box.classList.add("visible");
 
-  // Update progress dots (max 4)
+  // Update progress dots
   const dots = document.querySelectorAll(".memory-progress .dot");
   dots.forEach((d, i) => {
-    if (i <= Math.min(surpriseIdx, TOTAL_NEW_PHOTOS - 1)) {
-      d.classList.add("active");
-    }
+    if (i <= surpriseIdx) d.classList.add("active");
   });
 
   fireConfetti(60);
@@ -127,14 +158,12 @@ function showSurprise() {
   surpriseIdx++;
 
   const btn = document.getElementById("magic-btn");
-  if (surpriseIdx < TOTAL_NEW_PHOTOS) {
-    btn.textContent = "🎁 Buka Memori Berikutnya!";
-  } else if (surpriseIdx < surprises.length) {
-    btn.textContent = "💝 Pesan Manis Lagi!";
+  if (surpriseIdx < surprises.length) {
+    btn.textContent = `🎁 Buka Lagi (${surpriseIdx}/${surprises.length})`;
   } else {
-    btn.textContent = "🔄 Ulang dari Awal!";
-    surpriseIdx = 0;
-    dots.forEach((d) => d.classList.remove("active"));
+    // All revealed — hide magic button, show "Lanjut →" BELOW the card
+    btn.classList.add("hidden");
+    document.getElementById("surprise-next").classList.remove("hidden");
   }
 }
 
@@ -144,7 +173,6 @@ function showSurprise() {
 const canvas = document.getElementById("confetti-canvas");
 const ctx = canvas.getContext("2d");
 let pieces = [];
-
 const COLORS = ["#FF6B9D", "#C77DFF", "#FFD166", "#06D6A0", "#FF9A5C", "#4CC9F0", "#FF4D6D", "#7B2FBE"];
 
 function resize() {
@@ -180,7 +208,7 @@ function animate() {
   }
   animating = true;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  pieces.forEach((p, i) => {
+  pieces.forEach((p) => {
     p.y += p.d + 1;
     p.tiltAngle += p.tiltSpeed;
     p.tilt = Math.sin(p.tiltAngle) * 12;
@@ -206,18 +234,16 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-// Initial confetti burst
-setTimeout(() => fireConfetti(100), 600);
-setTimeout(() => fireConfetti(80), 2000);
+// Initial welcome burst
+setTimeout(() => fireConfetti(120), 400);
 
 // ==========================================
-// MUSIC - Web Audio API (no external file)
+// STEP 2 — MUSIC (Web Audio API, no external file)
 // ==========================================
 let audioCtx = null;
 let musicInterval = null;
 let isPlaying = false;
 
-// Simple Happy Birthday melody notes (freq, duration)
 const melody = [
   [392, 300],
   [392, 150],
@@ -269,18 +295,24 @@ function playMelody() {
   return t;
 }
 
-const musicBtn = document.getElementById("music-btn");
+const musicBigBtn = document.getElementById("music-big-btn");
+const musicHint = document.getElementById("music-hint");
 
-musicBtn.addEventListener("click", function () {
+musicBigBtn.addEventListener("click", function () {
   if (isPlaying) {
     clearTimeout(musicInterval);
     isPlaying = false;
-    musicBtn.textContent = "🎵";
-    musicBtn.classList.remove("playing");
+    musicBigBtn.classList.remove("playing");
+    musicBigBtn.querySelector(".music-icon").textContent = "▶️";
+    musicBigBtn.querySelector(".music-label").textContent = "Play Music";
   } else {
     isPlaying = true;
-    musicBtn.textContent = "🎶";
-    musicBtn.classList.add("playing");
+    musicBigBtn.classList.add("playing");
+    musicBigBtn.querySelector(".music-icon").textContent = "🎶";
+    musicBigBtn.querySelector(".music-label").textContent = "Music Playing...";
+
+    musicHint.textContent = "🎵 Lagunya udah jalan, tap lanjut yuk!";
+
     const duration = playMelody();
     const ms = (duration - audioCtx.currentTime) * 1000;
     musicInterval = setTimeout(function loop() {
@@ -289,5 +321,9 @@ musicBtn.addEventListener("click", function () {
       const ms2 = (d - audioCtx.currentTime) * 1000;
       musicInterval = setTimeout(loop, ms2 - 200);
     }, ms - 200);
+
+    // Reveal lanjut button setelah music start
+    document.getElementById("step2-next").classList.remove("hidden");
+    fireConfetti(40);
   }
 });
