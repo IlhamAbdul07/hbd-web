@@ -127,7 +127,7 @@ document.getElementById("blow-btn").addEventListener("click", () => {
 // STEP 7 — SURPRISE BUTTON
 // ==========================================
 const surprises = [
-  { photo: "assets/7.webp", emoji: "🌟", msg: "Wanita karir hebat dan kuat itu kamu! Semangat teru Ibu Chika!" },
+  { photo: "assets/7.webp", emoji: "🌟", msg: "Wanita karir hebat dan kuat itu kamu! Semangat terus Ibu Chika!" },
   { photo: "assets/8.webp", emoji: "🦋", msg: "Doaku semoga kamu makin sukses dan jadi kepala sekolah SAC" },
   { photo: "assets/9.webp", emoji: "🌸", msg: "Mood booster banget kalau lagi sama kamu. Tetap sehat selalu ya!" },
   { photo: "assets/10.webp", emoji: "💫", msg: "Tahun depan harus lebih happy dari tahun ini. Semangat ngejar mimpi kamu!" },
