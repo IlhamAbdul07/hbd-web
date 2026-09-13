@@ -57,7 +57,7 @@ function resetAll() {
   candleLit = 0;
   document.getElementById("candle-count").textContent = "0";
   document.getElementById("cake-title").textContent = "Nyalain Lilinnya! 🕯️";
-  document.getElementById("cake-desc").textContent = "Tap satu-satu lilin di bawah untuk menyalakannya. Make a wish ya, Chika!";
+  document.getElementById("cake-desc").textContent = "Tap satu-satu lilin di bawah untuk menyalakannya. Make a wish ya, lorem ipsum!";
   document.getElementById("blow-btn").classList.add("hidden");
   document.getElementById("cake-next").classList.add("hidden");
   document.getElementById("cake-progress").classList.remove("hidden");
@@ -127,7 +127,7 @@ document.getElementById("blow-btn").addEventListener("click", () => {
 // STEP 7 — SURPRISE BUTTON
 // ==========================================
 const surprises = [
-  { photo: "assets/7.webp", emoji: "🌟", msg: "Wanita karir hebat dan kuat itu kamu! Semangat terus Ibu Chika!" },
+  { photo: "assets/7.webp", emoji: "🌟", msg: "Wanita karir hebat dan kuat itu kamu! Semangat terus Ibu lorem ipsum!" },
   { photo: "assets/8.webp", emoji: "🦋", msg: "Doaku semoga kamu makin sukses dan jadi kepala sekolah SAC" },
   { photo: "assets/9.webp", emoji: "🌸", msg: "Mood booster banget kalau lagi sama kamu. Tetap sehat selalu ya!" },
   { photo: "assets/10.webp", emoji: "💫", msg: "Tahun depan harus lebih happy dari tahun ini. Semangat ngejar mimpi kamu!" },
